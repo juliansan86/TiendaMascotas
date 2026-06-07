@@ -54,7 +54,7 @@ fun ProductDetailScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "$${product.price}",
+                    text = formatPrice(product.price),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.primary
                 )

@@ -5,16 +5,26 @@ import com.example.tiendademascotas.model.Pet
 import com.example.tiendademascotas.model.Product
 
 /**
- * Proveedor de datos estáticos para la aplicación.
- * En una app real, estos datos podrían venir de una API o Base de Datos.
+ * Proveedor de datos estáticos para la aplicación con precios en Pesos Colombianos (COP).
  */
 object DataSource {
-    // Lista de productos para el catálogo
+    // Lista de productos para el catálogo categorizada
     val products = listOf(
-        Product(1, "Comida para Perros", "Alimento balanceado para perros adultos de razas medianas.", 25.50, "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg"),
-        Product(2, "Juguete Masticable", "Juguete de goma resistente para perros de todos los tamaños.", 12.00, "https://images.pexels.com/photos/4588047/pexels-photo-4588047.jpeg"),
-        Product(3, "Cama para Gatos", "Cama suave y acogedora para gatos y perros pequeños.", 45.00, "https://images.pexels.com/photos/774731/pexels-photo-774731.jpeg"),
-        Product(4, "Shampoo para Mascotas", "Shampoo hipoalergénico con aroma a lavanda.", 15.75, "https://images.pexels.com/photos/4587979/pexels-photo-4587979.jpeg")
+        // Perros
+        Product(1, "Comida para Perros", "Alimento balanceado para perros adultos.", 85000.0, "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg", "Perros"),
+        Product(2, "Juguete Masticable", "Resistente para todas las tallas.", 35000.0, "https://images.pexels.com/photos/4588047/pexels-photo-4588047.jpeg", "Perros"),
+
+        // Gatos
+        Product(3, "Cama para Gatos", "Cama suave y acogedora.", 120000.0, "https://images.pexels.com/photos/774731/pexels-photo-774731.jpeg", "Gatos"),
+        Product(4, "Arena Sanitaria", "Control de olores avanzado.", 45000.0, "https://origens.com.pe/wp-content/uploads/2025/05/vista-superior-de-accesorios-para-mascotas-scaled.jpg", "Gatos"),
+
+        // Aves
+        Product(5, "Jaula para Aves", "Espaciosa con accesorios incluidos.", 150000.0, "https://panel.artiani.com.mx/media/apps/ecommerce/productos/1487/1758503316.jpg", "Aves"),
+        Product(6, "Mezcla de Semillas", "Nutrición completa para aves pequeñas.", 15000.0, "https://cdn.shopify.com/s/files/1/0012/3512/4273/collections/mayoreo_ALPISTE2.jpg?v=1617068769", "Aves"),
+
+        // Peces
+        Product(7, "Acuario de Cristal", "Capacidad de 20 litros con filtro.", 250000.0, "https://images.pexels.com/photos/3220368/pexels-photo-3220368.jpeg", "Peces"),
+        Product(8, "Alimento en Hojuelas", "Potencia el color de tus peces.", 12000.0, "https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg", "Peces")
     )
 
     // Lista de mascotas para la galería
@@ -27,7 +37,7 @@ object DataSource {
     // Lista de consejos de cuidado con audio
     val careTips = listOf(
         CareTip(1, "Cuidado del Cachorro", "Consejos básicos sobre la alimentación y socialización de tu cachorro.", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"),
-        CareTip(2, "Higiene Felina", "Cómo mantener a tu gato limpio y saludable.", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"),
+        CareTip(2, "Higiene Felina", "Cómo mantener a tu gato limpio y saludable.", "https://open.spotify.com/episode/3RLNXiOFGMHkgUAmeAIDsH?si=05d354aa8d9e46a7"),
         CareTip(3, "Ejercicio para Perros", "La importancia del paseo diario para tu mascota.", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")
     )
 }

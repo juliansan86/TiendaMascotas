@@ -4,55 +4,37 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.tiendademascotas.data.DataSource
 import com.example.tiendademascotas.model.CareTip
 import com.example.tiendademascotas.model.Pet
 import com.example.tiendademascotas.model.Product
-import com.example.tiendademascotas.network.RetrofitClient
-import kotlinx.coroutines.launch
 
 /**
- * ViewModel que gestiona la lógica de obtención de datos desde la API.
- * Mantiene el estado de la UI y gestiona los ciclos de vida de las corrutinas.
+ * ViewModel que gestiona la lógica de la aplicación siguiendo el patrón MVVM.
+ * Utiliza DataSource para obtener datos locales estáticos.
  */
 class PetViewModel : ViewModel() {
 
-    var products by mutableStateOf<List<Product>>(emptyList())
+    // Estado para productos
+    var products by mutableStateOf<List<Product>>(DataSource.products)
         private set
 
-    var pets by mutableStateOf<List<Pet>>(emptyList())
+    // Estado para mascotas
+    var pets by mutableStateOf<List<Pet>>(DataSource.pets)
         private set
 
-    var careTips by mutableStateOf<List<CareTip>>(emptyList())
+    // Estado para consejos de cuidado
+    var careTips by mutableStateOf<List<CareTip>>(DataSource.careTips)
         private set
 
-    var isLoading by mutableStateOf(false)
+    // Estado para el modo oscuro (controlado por el usuario)
+    var isDarkMode by mutableStateOf(false)
         private set
-
-    var errorMessage by mutableStateOf<String?>(null)
-        private set
-
-    init {
-        fetchAllData()
-    }
 
     /**
-     * Llama a todos los endpoints de la API al iniciar el ViewModel.
+     * Alterna entre modo claro y oscuro.
      */
-    fun fetchAllData() {
-        viewModelScope.launch {
-            isLoading = true
-            errorMessage = null
-            try {
-                // Realizamos las llamadas en paralelo o secuencial
-                products = RetrofitClient.instance.getProducts()
-                pets = RetrofitClient.instance.getPets()
-                careTips = RetrofitClient.instance.getCareTips()
-            } catch (e: Exception) {
-                errorMessage = "Error al conectar con el servidor: ${e.message}"
-            } finally {
-                isLoading = false
-            }
-        }
+    fun toggleDarkMode() {
+        isDarkMode = !isDarkMode
     }
 }

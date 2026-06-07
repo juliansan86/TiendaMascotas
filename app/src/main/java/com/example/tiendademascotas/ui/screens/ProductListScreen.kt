@@ -3,48 +3,104 @@ package com.example.tiendademascotas.ui.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.tiendademascotas.model.Product
+import java.text.NumberFormat
+import java.util.*
 
 /**
- * Pantalla que muestra la lista de productos disponibles en la tienda.
+ * Pantalla que muestra la lista de productos dividida por categorías.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
     products: List<Product>,
+    isDarkMode: Boolean,
+    onToggleDarkMode: () -> Unit,
     onProductClick: (Product) -> Unit
 ) {
+    // Lista de categorías disponibles
+    val categories = listOf("Todos", "Perros", "Gatos", "Aves", "Peces")
+    var selectedCategory by remember { mutableStateOf("Todos") }
+
+    // Filtrar productos según la categoría seleccionada
+    val filteredProducts = if (selectedCategory == "Todos") {
+        products
+    } else {
+        products.filter { it.category == selectedCategory }
+    }
+
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Tienda de Mascotas - Productos") })
+            TopAppBar(
+                title = { Text("Tienda de Mascotas") },
+                actions = {
+                    IconButton(onClick = onToggleDarkMode) {
+                        Icon(
+                            imageVector = if (isDarkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
+                            contentDescription = "Cambiar modo"
+                        )
+                    }
+                }
+            )
         }
     ) { paddingValues ->
-        // Lista optimizada para scroll eficiente
-        LazyColumn(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(products) { product ->
-                ProductItem(product = product, onClick = { onProductClick(product) })
+        Column(modifier = Modifier.padding(paddingValues)) {
+            // Filtro de categorías (Selector horizontal)
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(categories) { category ->
+                    FilterChip(
+                        selected = selectedCategory == category,
+                        onClick = { selectedCategory = category },
+                        label = { Text(category) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                        )
+                    )
+                }
+            }
+
+            // Lista de productos filtrados
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(filteredProducts) { product ->
+                    ProductItem(product = product, onClick = { onProductClick(product) })
+                }
             }
         }
     }
 }
 
 /**
- * Componente individual para cada producto en la lista.
+ * Formatea un valor doble a moneda colombiana (COP).
  */
+fun formatPrice(price: Double): String {
+    val format = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
+    return format.format(price)
+}
+
 @Composable
 fun ProductItem(product: Product, onClick: () -> Unit) {
     Card(
@@ -54,15 +110,28 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column {
-            // Imagen del producto cargada con Coil
-            AsyncImage(
-                model = product.imageUrl,
-                contentDescription = product.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop
-            )
+            Box {
+                AsyncImage(
+                    model = product.imageUrl,
+                    contentDescription = product.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Crop
+                )
+                // Etiqueta de categoría sobre la imagen
+                Surface(
+                    modifier = Modifier.padding(8.dp),
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    shape = MaterialTheme.shapes.small
+                ) {
+                    Text(
+                        text = product.category,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+            }
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = product.name,
@@ -77,7 +146,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "$${product.price}",
+                    text = formatPrice(product.price),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
