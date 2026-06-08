@@ -1,13 +1,16 @@
 package com.example.tiendademascotas.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -29,15 +32,20 @@ fun PetGalleryScreen(
             TopAppBar(title = { Text("Galería de Mascotas") })
         }
     ) { paddingValues ->
-        LazyColumn(
+        val configuration = LocalConfiguration.current
+        val columns = if (configuration.screenWidthDp > 600) 3 else 1
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(columns),
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Sección: Mascotas Tiernas
-            item {
+            item(span = { GridItemSpan(columns) }) {
                 Text(
                     text = "Mascotas Tiernas",
                     style = MaterialTheme.typography.headlineSmall,
@@ -50,14 +58,16 @@ fun PetGalleryScreen(
             }
 
             // Sección: En Adopción y Compra
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "En Adopción y Compra",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
+            item(span = { GridItemSpan(columns) }) {
+                Column {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "En Adopción y Compra",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
             }
             items(adoptionAndSalePets) { pet ->
                 PetAdoptionCard(pet = pet, onClick = { onPetClick(pet) })

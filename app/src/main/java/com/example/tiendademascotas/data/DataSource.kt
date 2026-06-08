@@ -61,10 +61,10 @@ object DataSource {
     // Combinación para compatibilidad con el ViewModel (si se requiere)
     val pets = cutePets + adoptionAndSalePets
 
-    // Lista de consejos de cuidado con videos de YouTube (solo videos)
+    // Lista de consejos de cuidado con videos de Google Drive (usando ExoPlayer)
     val careTips = listOf(
-        CareTip(1, "J3NAYXXyBVI"),
-        CareTip(2, "LZ9AKsUCcTI"),
-        CareTip(3, "iZGingQsrHI")
+        CareTip(1, "Cómo cuidar a tu gato cachorro", "https://drive.google.com/uc?id=14lXBu_TeFWPo8bVUMHoQLfFe-Ig8MYiT"),
+        CareTip(2, "Alimentación balanceada para gatitos", "https://drive.google.com/uc?id=14lXBu_TeFWPo8bVUMHoQLfFe-Ig8MYiT"),
+        CareTip(3, "Higiene y salud en los primeros meses", "https://drive.google.com/uc?id=14lXBu_TeFWPo8bVUMHoQLfFe-Ig8MYiT")
     )
 }
