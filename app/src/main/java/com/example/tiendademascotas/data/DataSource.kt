@@ -27,17 +27,17 @@ object DataSource {
         Product(8, "Alimento en Hojuelas", "Potencia el color de tus peces.", 12000.0, "https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg", "Peces")
     )
 
-    // Lista de mascotas para la galería
+    // Lista de mascotas para la galería con videos de YouTube (solo videos)
     val pets = listOf(
-        Pet(1, "Buddy", "Perro", "Un Golden Retriever juguetón y amigable.", "https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg", "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"),
-        Pet(2, "Misty", "Gato", "Una gata curiosa que ama las caricias.", "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg", "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"),
-        Pet(3, "Rex", "Perro", "Un pastor alemán leal y protector.", "https://images.pexels.com/photos/164186/pexels-photo-164186.jpeg", "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4")
+        Pet(1, "FO1K41xJNIM"),
+        Pet(2, "wv_dJvjuC04"),
+        Pet(3, "_Q_BZ172ST0")
     )
 
-    // Lista de consejos de cuidado con audio
+    // Lista de consejos de cuidado con videos de YouTube (solo videos)
     val careTips = listOf(
-        CareTip(1, "Cuidado del Cachorro", "Consejos básicos sobre la alimentación y socialización de tu cachorro.", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"),
-        CareTip(2, "Higiene Felina", "Cómo mantener a tu gato limpio y saludable.", "https://open.spotify.com/episode/3RLNXiOFGMHkgUAmeAIDsH?si=05d354aa8d9e46a7"),
-        CareTip(3, "Ejercicio para Perros", "La importancia del paseo diario para tu mascota.", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")
+        CareTip(1, "J3NAYXXyBVI"),
+        CareTip(2, "LZ9AKsUCcTI"),
+        CareTip(3, "iZGingQsrHI")
     )
 }

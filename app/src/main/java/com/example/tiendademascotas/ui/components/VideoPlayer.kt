@@ -3,48 +3,38 @@ package com.example.tiendademascotas.ui.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 /**
- * Componente que integra ExoPlayer para reproducir videos.
- * Utiliza AndroidView para renderizar la vista clásica de PlayerView dentro de Compose.
+ * Componente que integra android-youtube-player para reproducir videos de YouTube.
+ * Se sincroniza con el ciclo de vida de Android para un manejo eficiente de recursos.
  */
 @Composable
-fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
+fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
+    val lifecycleOwner = LocalLifecycleOwner.current
     
-    // Inicialización de ExoPlayer recordada durante la recomposición
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(videoUrl))
-            prepare()
-        }
-    }
-
-    // Gestiona el ciclo de vida del reproductor para liberar recursos
-    DisposableEffect(Unit) {
-        onDispose {
-            exoPlayer.release()
-        }
-    }
-
-    // Integración de la vista de video de Media3
     AndroidView(
-        factory = {
-            PlayerView(context).apply {
-                player = exoPlayer
+        factory = { context ->
+            YouTubePlayerView(context).apply {
+                lifecycleOwner.lifecycle.addObserver(this)
+                addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.cueVideo(videoId, 0f)
+                    }
+                })
             }
         },
         modifier = modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(250.dp),
+        onRelease = {
+            it.release()
+        }
     )
 }

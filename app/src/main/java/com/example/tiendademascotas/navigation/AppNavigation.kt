@@ -2,9 +2,9 @@ package com.example.tiendademascotas.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Audiotrack
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,7 +24,7 @@ import com.example.tiendademascotas.ui.viewmodel.PetViewModel
 sealed class Screen(val route: String, val title: String, val icon: androidx.compose.ui.graphics.vector.ImageVector) {
     object Products : Screen("products", "Tienda", Icons.Default.ShoppingCart)
     object Gallery : Screen("gallery", "Galería", Icons.Default.Pets)
-    object Care : Screen("care", "Cuidados", Icons.Default.Audiotrack)
+    object Care : Screen("care", "Cuidados", Icons.Default.VideoLibrary)
 }
 
 @Composable
