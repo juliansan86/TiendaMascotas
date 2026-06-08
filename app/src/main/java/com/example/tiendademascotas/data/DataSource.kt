@@ -27,12 +27,39 @@ object DataSource {
         Product(8, "Alimento en Hojuelas", "Potencia el color de tus peces.", 12000.0, "https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg", "Peces")
     )
 
-    // Lista de mascotas para la galería con videos de YouTube (solo videos)
-    val pets = listOf(
-        Pet(1, "FO1K41xJNIM"),
-        Pet(2, "wv_dJvjuC04"),
-        Pet(3, "_Q_BZ172ST0")
+    // Sección: Mascotas Tiernas (Solo Videos)
+    val cutePets = listOf(
+        Pet(id = 1, videoUrl = "FO1K41xJNIM"),
+        Pet(id = 2, videoUrl = "wv_dJvjuC04"),
+        Pet(id = 3, videoUrl = "_Q_BZ172ST0")
     )
+
+    // Sección: En Adopción y Compra (Solo Imágenes)
+    val adoptionAndSalePets = listOf(
+        Pet(
+            id = 4,
+            imageUrl = "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg",
+            status = "En Adopción" // Perro
+        ),
+        Pet(
+            id = 5,
+            imageUrl = "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg",
+            status = "En Adopción" // Gato
+        ),
+        Pet(
+            id = 6,
+            imageUrl = "https://images.pexels.com/photos/3220368/pexels-photo-3220368.jpeg",
+            status = "En Venta" // Peces
+        ),
+        Pet(
+            id = 7,
+            imageUrl = "https://images.pexels.com/photos/326012/pexels-photo-326012.jpeg",
+            status = "En Venta" // Aves
+        )
+    )
+
+    // Combinación para compatibilidad con el ViewModel (si se requiere)
+    val pets = cutePets + adoptionAndSalePets
 
     // Lista de consejos de cuidado con videos de YouTube (solo videos)
     val careTips = listOf(
